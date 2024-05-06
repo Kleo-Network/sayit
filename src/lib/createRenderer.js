@@ -219,7 +219,7 @@ export default function createRenderer(progress) {
 
   function addNode(node) {
     const dRatio = node.data.size * 1.2; // (graph.maxDepth - node.data.depth)/graph.maxDepth;
-    let pos = getNodePosition(node.id);
+    //let pos = getNodePosition(node.id);
     if (node.data.depth === 0) {
       layout.pinNode(node);
     }
@@ -228,7 +228,7 @@ export default function createRenderer(progress) {
     layout.addNode(node.id, uiAttributes);
 
     const rectAttributes = {
-      x: uiAttributes.x,
+      x: uiAttributes.x ,
       y: uiAttributes.y,
       width: uiAttributes.width,
       height: uiAttributes.height,
@@ -236,27 +236,60 @@ export default function createRenderer(progress) {
       ry: uiAttributes.ry,
       fill: 'white',
       'stroke-width': uiAttributes.strokeWidth,
-      stroke: '#aaa' // '#58585A'
-    };
-    const textAttributes = {
-      'font-size': uiAttributes.fontSize,
-      x: uiAttributes.px,
-      y: uiAttributes.py
-    };
+      stroke: '#aaa' // '#58585A',
 
+    };
+    const imageUrls = [
+      "https://i.imgur.com/uVDr1NT_d.webp?maxwidth=760&fidelity=grand",
+      "https://i.imgur.com/uzRq46g_d.webp?maxwidth=760&fidelity=grand",
+      "https://i.imgur.com/QVrBNQr_d.webp?maxwidth=760&fidelity=grand",
+      "https://i.imgur.com/IzmTjII_d.webp?maxwidth=760&fidelity=grand",
+      "https://i.imgur.com/JznjgEZ_d.webp?maxwidth=760&fidelity=grand",
+      "https://i.imgur.com/bl3zTDN_d.webp?maxwidth=760&fidelity=grand",
+      "https://i.imgur.com/dIAtbJJ_d.webp?maxwidth=760&fidelity=grand",
+      "https://i.imgur.com/y0VOjOZ_d.webp?maxwidth=760&fidelity=grand",
+      "https://media.licdn.com/dms/image/D4D03AQFrOs-wAbetIA/profile-displayphoto-shrink_800_800/0/1667166891521?e=1720656000&v=beta&t=u31W3_NuYjfIFlBBjILLhASw2EJdCj50c4u9ConS9Ik"
+    ];
+    const randomImageUrl = imageUrls[Math.floor(Math.random() * imageUrls.length)];
+
+    const clipPathId = `circleView-${node.id}`;
+
+    const imgAttributes = {
+      width: uiAttributes.width -3,
+      height: uiAttributes.height-3,
+      href: randomImageUrl,
+      "clip-path": `url(#${clipPathId})`,
+      x: uiAttributes.x,
+      y: uiAttributes.y
+    };
     const rect = svg('rect', rectAttributes);
-    const text = svg('text', textAttributes);
-    text.text(node.id);
+    //const text = svg('text', textAttributes);
+    const img = svg('image', imgAttributes)
+    
+    //text.text(node.id);
+    
+    const clipPath = svg('clipPath', { id: clipPathId });
+    const circle = svg('circle', { cx: 0, cy: 0, r: 17 });
+    clipPath.appendChild(circle);
 
     const ui = svg('g', {
       class: 'node',
       id: 'node-' + node.id,
-      transform: `translate(${pos.x}, ${pos.y})`
+      //transform: `translate(${pos.x}, ${pos.y})`
     });
-
     ui.appendChild(rect);
-    ui.appendChild(text);
+    ui.appendChild(img)
+    ui.appendChild(clipPath); 
 
+    
+    
+    //rect.appendChild(img);
+
+    //ui.appendChild(text);
+    
+    
+
+    //ui.appendChild(defs);
     nodeContainer.appendChild(ui);
     nodes.set(node.id, ui);
   }
@@ -264,8 +297,10 @@ export default function createRenderer(progress) {
   function getNodeUIAttributes(nodeId, dRatio) {
     const fontSize = 24 * dRatio + 12;
     const size = textMeasure(nodeId, fontSize);
-    const width = size.totalWidth + size.spaceWidth * 6;
-    const height = fontSize * 1.6;
+    // const width = size.totalWidth + size.spaceWidth * 6;
+    // const height = fontSize * 1.6;
+    const width = 40;
+    const height = 40;
 
     return {
       fontSize,
@@ -273,8 +308,8 @@ export default function createRenderer(progress) {
       height,
       x: -width / 2,
       y: -height / 2,
-      rx: 15 * dRatio + 2,
-      ry: 15 * dRatio + 2,
+      rx: 50,
+      ry: 50,
       px: -width / 2 + size.spaceWidth * 3,
       py: -height / 2 + fontSize * 1.1,
       strokeWidth: 4 * dRatio + 1

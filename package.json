@@ -11,6 +11,7 @@
   "dependencies": {
     "core-js": "^3.6.5",
     "delaunator": "^3.0.2",
+    "domparser": "^0.1.1",
     "fuse.js": "^3.3.0",
     "fuzzysort": "^1.1.4",
     "ngraph.events": "0.0.4",
@@ -20,7 +21,7 @@
     "ngraph.random": "^1.0.0",
     "panzoom": "^9.2.4",
     "query-state": "^4.3.0",
-    "simplesvg": "^0.1.1",
+    "simplesvg": "^0.1.3",
     "splaytree": "^2.0.3",
     "vue": "^2.6.11",
     "vuereddit": "^0.2.0"

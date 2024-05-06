@@ -1,24 +1,16 @@
 <template>
   <div id="app">
-    <form v-on:submit.prevent="onSubmit" class="search-box">
-      <!-- <input class='search-input' type="text" v-model='appState.query' placeholder='Enter query' autofocus> -->
-      <typeahead
-        placeholder="Enter subreddit name"
-        ref:typeahead
-        @selected="doSearch"
-        :query="appState.query"
-        :get-suggestions="getSuggestions"
-      ></typeahead>
-    </form>
+    <img src="https://www.kleo.network/assets/superteam-955ceda4.png" width="100  " alt="Superteam logo">
+    <img src="https://d16c97c2np8a2o.cloudfront.net/ipfs/bafkreihblbkucb5lqgmzwlrbvmczyjnpfrlhhklhgwcihm3onqkl7u6kyu" width="100" alt="Gitcoin logo">
     <div class="help" v-if="!isLoading">
-      The graph of related subreddits
+      The graph of all superteam india members on kleo network
       <a
         href="#"
         @click.prevent="aboutVisible = true"
         class="highlight"
       >Learn more.</a>
     </div>
-    <div class="help" v-if="isLoading">{{appState.progress.message}}</div>
+    <div class="help" v-if="isLoading">loading...</div>
     <div class="about-line">
       <a class="about-link" href="#" @click.prevent="aboutVisible = true">about</a>
       <a class="bold" href="https://github.com/anvaka/sayit">source code</a>
@@ -54,7 +46,6 @@ import appState, { performSearch } from "./appState.js";
 import Subreddit from "vuereddit";
 import createRenderer from "./lib/createRenderer";
 import About from "./components/About";
-import Typeahead from "./components/Typeahead";
 import bus from "./bus";
 import redditDataClient from "./lib/redditDataClient";
 
@@ -74,7 +65,7 @@ export default {
   },
   components: {
     About,
-    Typeahead,
+    
     Subreddit
   },
   computed: {
